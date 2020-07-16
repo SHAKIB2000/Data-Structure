@@ -1,0 +1,147 @@
+Problem 1 :  Suppose , there have a class which contain 30 benches with serial numbers from 0 to 29.
+7 individual students are there in the class now. Each student has a student id with 2 numbers.
+Student must seat in the class by his/her student id wise ascending order.
+Then a student come to the class . Teacher will found whether the student id is already present or not.
+If not found let the student be seated to exact position. If student id already present then disqualify the student.
+The head teacher also said that the whole process should be perform / solved in a short time and properly.
+
+
+Solution:
+
+#include<stdio.h>
+void main()
+{
+    int temp,i,j,n=7,benches[30],ub=6,lb=0,search,mid,pos;
+        //Takes input of students id
+    printf("Enter %d students ID : ",n);
+    for(i=0;i<7;i++)
+        scanf("%d",&benches[i]);
+        //sort the IDs using bubble sort
+    for(i=0;i<n-1;i++)
+    {
+        for(j=0;j<n-i-1;j++)
+        {
+            if(benches[j]>benches[j+1])
+            {
+                temp=benches[j];
+                benches[j]=benches[j+1];
+                benches[j+1]=temp;
+            }
+        }
+    }
+    printf("Enter the ID of last entered student : ");
+    scanf("%d",&search);
+    //Binary serach for last student
+    while(lb<=ub)
+    {
+        mid=(ub+lb)/2;
+        if(benches[mid]==search)
+        {   //Array deletion
+            for(i=mid;i<n-1;i++)
+            {
+                benches[i]=benches[i+1];
+            }
+            n--;
+            printf("ID-'%d' is already in there.So the student is disqualified!\n\n",search);
+            break;
+        }
+        else if(benches[mid]>search)
+        {
+            ub=mid-1;
+        }
+        else
+        {
+            lb=mid+1;
+        }
+    }
+    if(lb>ub)
+    {
+        for(i=0;i<n;i++)
+        {   //Find the exact position for the last student
+            if(search>benches[i] && search<benches[i+1])
+            {
+                pos=i+1;
+                break;
+            }
+            else if(search<=0)
+            {
+                pos=0;
+            }
+            else
+            {
+                pos=n;
+            }
+        }
+        //Array insertion
+        for(i=n;i>=pos;i--)
+            {
+                benches[i+1]=benches[i];
+            }
+            n++;
+            benches[pos]=search;
+            printf("\nStudent ID-'%d' seated at Bench no %d!\n\n",search,pos);
+    }
+    printf("Finally the %d students are seated like this\n\n",n);
+    printf("BENCH NO\tID\n");
+    for(i=0;i<n;i++)
+    {
+        printf("%d\t\t%d\n\n",i,benches[i]);
+    }
+}
+
+
+
+Problem 2 : Suppose you have an array with some elements a[]={2,6,8,1,5,4,6}. Find one element "1".
+If found then delete it.
+
+
+Solution:
+
+#include<stdio.h>
+void main()
+{
+    int temp,i,j,n=7,a[]={2,6,8,1,5,4,6},ub=6,lb=0,search=1,mid;
+
+    for(i=0;i<n-1;i++)
+    {
+        for(j=0;j<n-i-1;j++)
+        {
+            if(a[j]>a[j+1])
+            {
+                temp=a[j];
+                a[j]=a[j+1];
+                a[j+1]=temp;
+            }
+        }
+    }
+    while(lb<=ub)
+    {
+        mid=(ub+lb)/2;
+        if(a[mid]==search)
+        {
+            for(i=mid;i<n-1;i++)
+            {
+                a[i]=a[i+1];
+            }
+            n--;
+            printf("'%d' is found and deleted!\nNow the array is:\n",search);
+            for(i=0;i<n;i++)
+            {
+                printf("%d ",a[i]);
+            }
+            break;
+        }
+        else if(a[mid]>search)
+        {
+            ub=mid-1;
+        }
+        else
+        {
+            lb=mid+1;
+        }
+    }
+    if(lb>ub)
+    {
+        printf("%d is not found!",search);
+    }
+}
