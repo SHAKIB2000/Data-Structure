@@ -1,0 +1,79 @@
+/*Create a doubly linked list with 3 character elements,
+insert one element at the first position of this linked list
+and print all elements.*/
+#include<stdio.h>
+#include<stdlib.h>
+struct Node
+{
+    char data;
+    struct Node *left,*right;
+};
+typedef struct Node node;
+node *head,*temp,*first=0;
+void create(char data)
+{
+    head=(node*)malloc(sizeof(node));
+    head->data=data;
+    head->left=NULL;
+    head->right=NULL;
+    if(first==0)
+    {
+        head->left=temp=first=head;
+    }
+    else
+    {
+        temp->right=head;
+        head->left=temp;
+        temp=head;
+    }
+}
+void insertATbegin(char data)
+{
+    if(first==0)
+    {
+        printf("No nodes in there!\n");
+    }
+    else
+    {
+        head=(node*)malloc(sizeof(node));
+        head->data=data;
+        head->left=head;
+        head->right=first;
+        first=head;
+
+    }
+}
+void display()
+{
+    if(first==0)
+    {
+        printf("No nodes in there!\n");
+    }
+    else
+    {
+        temp=first;
+        printf("\nElements of the linked list: \n");
+        while(temp!=NULL)
+        {
+            printf("%c ",temp->data);
+            temp=temp->right;
+        }
+    }
+}
+void main()
+{
+    int n=3,i;
+    char data;
+    for(i=1;i<=n;i++)
+    {
+        printf("Enter node %d data(character): ",i);
+        scanf("%c",&data);
+        create(data);
+        getchar();
+    }
+    printf("\nEnter a character to insert at the first position: ");
+    scanf("%c",&data);
+    insertATbegin(data);
+    display();
+    printf("\n");
+}
